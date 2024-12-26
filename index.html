@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencarian dan Pengurutan Buku</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Pencarian dan Pengurutan Buku</h1>
+    <label for="search">Cari Buku:</label>
+    <input type="text" id="search" placeholder="Masukkan judul buku...">
+    <button onclick="searchBooksIterative()">Cari (Iteratif)</button>
+    <button onclick="searchBooksRecursiveWrapper()">Cari (Rekursif)</button>
+    <button onclick="sortBooksByISBNIterative()">Urutkan (ISBN Iteratif)</button>
+    <button onclick="sortBooksByISBNRecursive()">Urutkan (ISBN Rekursif)</button>
+
+    <p id="status"></p>
+
+    <div class="complexity-container">
+        <h2>Kompleksitas Algoritma</h2>
+        <table class="complexity-table">
+            <thead>
+                <tr>
+                    <th>Algoritma</th>
+                    <th>Jenis</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sorting (Iteratif)</td>
+                    <td>Bubble Sort</td>
+                    <td id="iterativeSortTime">O(n²)</td>
+                </tr>
+                <tr>
+                    <td>Sorting (Rekursif)</td>
+                    <td>Merge Sort</td>
+                    <td id="recursiveSortTime">O(n log n)</td>
+                </tr>
+                <tr>
+                    <td>Searching (Iteratif)</td>
+                    <td>Linear Search</td>
+                    <td id="iterativeSearchTime">O(n)</td>
+                </tr>
+                <tr>
+                    <td>Searching (Rekursif)</td>
+                    <td>Linear Search</td>
+                    <td id="recursiveSearchTime">O(n)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="data-count-container">
+        <h2>Total Data</h2>
+        <p id="dataCount">Jumlah data saat ini: <span id="bookCount">0</span></p>
+    </div>
+    <div class="chart-container">
+        <h2>Perbandingan Kompleksitas Algoritma</h2>
+        <canvas id="algorithmComparisonChart"></canvas>
+    </div>
+    
+    <table id="bookTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Indeks Buku</th>
+                <th onclick="sortTable(1)">Judul Buku</th>
+                <th>Pengarang</th>
+                <th>Kategori</th>
+                <th>Penerbit</th>
+                <th>Tahun Terbit</th>
+                <th>ISBN</th>
+                <th>Link Download</th>
+            </tr>
+        </thead>
+        <tbody id="bookList">
+            <!-- Data akan dimuat secara dinamis -->
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+        function updateComplexityDisplay() {
+            const n = books.length; // Jumlah data
+
+            document.getElementById('iterativeSortTime').textContent = `O(${n}²)`;
+            document.getElementById('recursiveSortTime').textContent = `O(${n} log ${n})`;
+            document.getElementById('iterativeSearchTime').textContent = `O(${n})`;
+            document.getElementById('recursiveSearchTime').textContent = `O(${n})`;
+
+            document.getElementById('bookCount').textContent = n;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadBooks().then(() => updateComplexityDisplay());
+        });
+    </script>
+</body>
+</html>
